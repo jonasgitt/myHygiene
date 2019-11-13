@@ -1,5 +1,9 @@
 <resources>
 
     <string name="app_name">BeaconReference</string>
+    <string name="title_activity_live_status">liveStatusActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
 
 </resources>
