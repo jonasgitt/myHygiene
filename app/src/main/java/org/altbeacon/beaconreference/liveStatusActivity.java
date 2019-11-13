@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class liveStatusActivity extends AppCompatActivity {
     private TextView mTextMessage;
@@ -22,6 +23,8 @@ public class liveStatusActivity extends AppCompatActivity {
     LottieAnimationView alert_symbol;
     LottieAnimationView checked_done;
     LottieAnimationView loading_rainbow;
+    LottieAnimationView tracking_symbol;
+
     LottieAnimationView toggle;
 
     int flag = 0;
@@ -61,6 +64,7 @@ public class liveStatusActivity extends AppCompatActivity {
         loading_rainbow = findViewById(R.id.animation_loading_rainbow);
         alert_symbol = findViewById(R.id.animation_alert_symbol);
         checked_done = findViewById(R.id.animation_checked_done);
+        tracking_symbol = findViewById(R.id.animation_tracking_symbol);
 
         loading_rainbow.setRepeatCount(5);
         loading_rainbow.addAnimatorListener(new Animator.AnimatorListener() {
@@ -93,9 +97,15 @@ public class liveStatusActivity extends AppCompatActivity {
             }
         });
 
-        alert_symbol.setVisibility(View.INVISIBLE);
-        checked_done.setVisibility(View.INVISIBLE);
-        //loading_rainbow.setVisibility(View.INVISIBLE);
+        tracking_symbol.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tracking_symbol.setVisibility(View.INVISIBLE);
+                loading_rainbow.setVisibility(View.VISIBLE);
+                loading_rainbow.playAnimation();
+                //---- Your code here------
+            }
+        });
     }
 
 
