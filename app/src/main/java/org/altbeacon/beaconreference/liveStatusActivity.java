@@ -20,6 +20,8 @@ public class liveStatusActivity extends AppCompatActivity {
 
     Boolean hasDispensed = false;
 
+    TextView status_text;
+
     LottieAnimationView alert_symbol;
     LottieAnimationView checked_done;
     LottieAnimationView loading_rainbow;
@@ -59,6 +61,7 @@ public class liveStatusActivity extends AppCompatActivity {
 
 
 
+        status_text = findViewById(R.id.status_text);
 
         //ANIMATIONS
         loading_rainbow = findViewById(R.id.animation_loading_rainbow);
@@ -71,7 +74,7 @@ public class liveStatusActivity extends AppCompatActivity {
 
             @Override
             public void onAnimationStart(Animator animator) {
-
+                status_text.setText(R.string.loading_text);
             }
 
             @Override
@@ -80,9 +83,11 @@ public class liveStatusActivity extends AppCompatActivity {
                 loading_rainbow.setVisibility(View.INVISIBLE);
                 if (hasDispensed){
                     checked_done.setVisibility(View.VISIBLE);
+                    status_text.setText(R.string.disinfected_text);
                 }
                 else {
                     alert_symbol.setVisibility(View.VISIBLE);
+                    status_text.setText(R.string.alert_text);
                 }
             }
 
@@ -95,6 +100,29 @@ public class liveStatusActivity extends AppCompatActivity {
             public void onAnimationRepeat(Animator animation) {
                 Log.e("Animation:","repeat");
             }
+        });
+
+        alert_symbol.addAnimatorListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animator) {
+                status_text.setText(R.string.alert_text);
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animator) {
+
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animator) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animator) {
+
+            }
+
         });
 
         tracking_symbol.setOnClickListener(new View.OnClickListener() {
