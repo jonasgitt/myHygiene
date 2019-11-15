@@ -1,143 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/custom_background"
-
-    tools:context=".liveStatusActivity">
-
-    <TextView
-        android:id="@+id/status_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:layout_marginBottom="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/animation_checked_done"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/animation_tracking_symbol"
-        android:layout_width="89dp"
-        android:layout_height="83dp"
-
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-
-        app:layout_constraintVertical_bias="0.15"
+    android:weightSum="10">
 
 
-        app:lottie_autoPlay="true"
-        app:lottie_fileName="tracking_symbol.json"
-        app:lottie_loop="true"
-        app:lottie_speed="1.0" />
 
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/animation_alert_symbol"
-        android:layout_width="89dp"
-        android:layout_height="83dp"
-        android:visibility="invisible"
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2">
 
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:padding="10dp"
+            app:cardElevation="10dp"
+            app:cardCornerRadius="4dp"
+            app:strokeWidth="5dp">
 
-        app:layout_constraintVertical_bias="0.15"
+            <include layout="@layout/animations" />
+        </com.google.android.material.card.MaterialCardView>
 
-        app:lottie_autoPlay="true"
-        app:lottie_fileName="alert_symbol.json"
-        app:lottie_loop="true"
-        app:lottie_speed="1.0" />
+    </LinearLayout>
 
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/animation_loading_rainbow"
-        android:layout_width="56dp"
-        android:layout_height="57dp"
-        android:visibility="invisible"
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="7"
+        android:background="#47C8F8">
 
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:padding="10dp"
+            app:cardElevation="10dp"
+            app:cardCornerRadius="4dp"
+            app:strokeWidth="5dp">
 
-        app:layout_constraintVertical_bias="0.15"
+            <include layout="@layout/statistic" />
+        </com.google.android.material.card.MaterialCardView>
 
-        app:lottie_autoPlay="true"
-        app:lottie_fileName="loading_rainbow.json"
-        app:lottie_loop="false"
-        app:lottie_speed="1.0" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
 
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/animation_checked_done"
-        android:layout_width="111dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="10dp"
+            android:clipToPadding="false"
+            tools:listitem="@layout/item_timeline"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
-        android:layout_height="107dp"
-        android:visibility="invisible"
-
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-
-        app:layout_constraintVertical_bias="0.15"
-
-        app:lottie_autoPlay="true"
-        app:lottie_fileName="checked_done.json"
-        app:lottie_loop="false"
-        app:lottie_speed="1.0" />
+    </LinearLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav_view"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_weight="1"
+
+
+
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_marginStart="0dp"
         android:layout_marginEnd="0dp"
+
+
+
         android:background="?android:attr/windowBackground"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+
         app:menu="@menu/bottom_nav_menu" />
 
-    <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/barrier"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:barrierDirection="left" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/cc"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.504" >
-
-        <TextView
-            android:id="@+id/bla"
-            android:layout_width="411dp"
-            android:layout_height="475dp"
-
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

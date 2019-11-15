@@ -80,7 +80,7 @@ public class liveStatusActivity extends AppCompatActivity {
             @Override
             public void onAnimationEnd(Animator animation) {
                 Log.e("Animation:","end");
-                loading_rainbow.setVisibility(View.INVISIBLE);
+                loading_rainbow.setVisibility(View.GONE);
                 if (hasDispensed){
                     checked_done.setVisibility(View.VISIBLE);
                     status_text.setText(R.string.disinfected_text);
@@ -128,7 +128,7 @@ public class liveStatusActivity extends AppCompatActivity {
         tracking_symbol.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                tracking_symbol.setVisibility(View.INVISIBLE);
+                tracking_symbol.setVisibility(View.GONE);
                 loading_rainbow.setVisibility(View.VISIBLE);
                 loading_rainbow.playAnimation();
                 //---- Your code here------
