@@ -15,18 +15,21 @@
         app:markerSize="20dp"
         app:lineWidth="3dp"
 
-        app:lineStyle="dash"/>
+        app:lineStyle="normal"
+        app:markerInCenter = "true"
+        app:lineOrientation="vertical"
+        />
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="15dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="3dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="5dp"
         android:layout_gravity="center_vertical"
 
-        app:contentPadding="15dp">
+        app:contentPadding="10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -49,6 +52,14 @@
                 android:id="@+id/text_timeline_title"
                 android:textColor="@android:color/black"
                 tools:text="Order Successfully Completed"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:id="@+id/text_HHEs"
+                android:textColor="@android:color/black"
+                tools:text="HHE at 1234"/>
 
         </LinearLayout>
 

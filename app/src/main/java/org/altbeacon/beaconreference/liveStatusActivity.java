@@ -8,12 +8,17 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class liveStatusActivity extends AppCompatActivity {
     private TextView mTextMessage;
@@ -28,6 +33,11 @@ public class liveStatusActivity extends AppCompatActivity {
     LottieAnimationView tracking_symbol;
 
     LottieAnimationView toggle;
+
+    //Timeline Stuff
+    private timelineViewAdapter mAdapter;
+    private  List<timelineViewModel> mDataList = new ArrayList<timelineViewModel>();
+    private LinearLayoutManager mLayoutManager;
 
     int flag = 0;
 
@@ -59,6 +69,10 @@ public class liveStatusActivity extends AppCompatActivity {
         mTextMessage = findViewById(R.id.message);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
+
+        //Initialize Timeline
+        setDataListItems();
+        initRecyclerView();
 
 
         status_text = findViewById(R.id.status_text);
@@ -159,4 +173,26 @@ public class liveStatusActivity extends AppCompatActivity {
         }
     }
 
+    private void initRecyclerView(){
+
+        mLayoutManager =  new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
+        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(mLayoutManager);
+
+        mAdapter = new timelineViewAdapter(this, mDataList);
+
+        recyclerView.setAdapter(mAdapter);
+
+    }
+
+    private void setDataListItems(){
+
+        mDataList.add(new timelineViewModel("Visit to Room 123","09:00","10","HHE detected 30s after entry"));
+        mDataList.add(new timelineViewModel("Visit to Room 123","09:00","10","HHE detected 30s after entry"));
+        mDataList.add(new timelineViewModel("Visit to Room 123","09:00","10","HHE detected 30s after entry"));
+        mDataList.add(new timelineViewModel("Visit to Room 123","09:00","10","HHE detected 30s after entry"));
+        mDataList.add(new timelineViewModel("Visit to Room 123","09:00","10","HHE detected 30s after entry"));
+
+
+    }
 }
