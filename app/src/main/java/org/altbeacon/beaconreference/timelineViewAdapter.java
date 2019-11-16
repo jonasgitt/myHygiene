@@ -1,6 +1,7 @@
 package org.altbeacon.beaconreference;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.vipulasri.timelineview.TimelineView;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -49,8 +48,19 @@ public class timelineViewAdapter extends RecyclerView.Adapter<timelineViewAdapte
             holder.mDate.setText(mModel.date);
         }
         holder.mMessage.setText(mModel.message);
-        holder.mHHEs.setText(mModel.HHEtime);
 
+
+        if (mModel.HHEtime == ""){
+            holder.mTimelineView.setMarkerColor(R.color.no_hhe_color);
+            holder.mHHEs.setText(R.string.no_hhe_text);
+
+            Resources res = holder.itemView.getContext().getResources();
+
+            holder.mTimelineView.setMarker(res.getDrawable(R.drawable.ic_alert_nohhe));
+        }
+        else {
+            holder.mHHEs.setText(mModel.HHEtime);
+        }
 
 
         final boolean isExpanded = position==mExpandedPosition;
@@ -66,6 +76,11 @@ public class timelineViewAdapter extends RecyclerView.Adapter<timelineViewAdapte
         });
     }
 
+    private void setMarkerColor(timelineViewHolder holder, int color){
+
+
+
+    }
 
     @Override
     public int getItemViewType(int position) {
@@ -86,6 +101,7 @@ public class timelineViewAdapter extends RecyclerView.Adapter<timelineViewAdapte
         TextView mDate;
         TextView mMessage;
         TextView mHHEs;
+
 
         timelineViewHolder(View itemView, int viewType) {
             super(itemView);

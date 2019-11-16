@@ -9,5 +9,10 @@
     <string name="loading_text">Please disinfect</string>
     <string name="alert_text">Have you forgotten to disinfect?</string>
     <string name="disinfected_text">Well done!</string>
+    <string name="no_hhe_text">No HHEs detected in this room.</string>
+    <string name="timeline_header_string">Timeline</string>
+    <string name="performance_header_string">Performance</string>
+    <string name="live_status_header">Status</string>
+    <string name="tracking_status_text">Remember to disinfect when you enter a patient room.</string>
 
 </resources>

@@ -14,14 +14,15 @@
         android:layout_height="match_parent"
         app:markerSize="20dp"
         app:lineWidth="3dp"
-
+        app:linePadding="2dp"
         app:lineStyle="normal"
-        app:markerInCenter = "true"
+        app:marker="@drawable/ic_marker_default"
         app:lineOrientation="vertical"
+
         />
 
     <com.google.android.material.card.MaterialCardView
-        android:layout_width="match_parent"
+        android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="3dp"
         android:layout_marginBottom="3dp"
@@ -58,6 +59,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:id="@+id/text_HHEs"
+                android:textSize="12sp"
                 android:textColor="@android:color/black"
                 tools:text="HHE at 1234"/>
 

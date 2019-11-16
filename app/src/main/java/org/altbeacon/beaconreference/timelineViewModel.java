@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 
 public class timelineViewModel {
 
+    public static int NO_HHE  = 0;
+    public static int YES_HHE = 1;
 
     public String message;
     public String date;

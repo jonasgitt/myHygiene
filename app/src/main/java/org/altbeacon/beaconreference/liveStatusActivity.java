@@ -31,7 +31,6 @@ public class liveStatusActivity extends AppCompatActivity {
     LottieAnimationView checked_done;
     LottieAnimationView loading_rainbow;
     LottieAnimationView tracking_symbol;
-
     LottieAnimationView toggle;
 
     //Timeline Stuff
@@ -74,6 +73,38 @@ public class liveStatusActivity extends AppCompatActivity {
         setDataListItems();
         initRecyclerView();
 
+        initAnimations();
+
+    }
+
+
+
+
+
+    private void initRecyclerView(){
+
+        mLayoutManager =  new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
+        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(mLayoutManager);
+
+        mAdapter = new timelineViewAdapter(this, mDataList);
+
+        recyclerView.setAdapter(mAdapter);
+
+    }
+
+    private void setDataListItems(){
+
+        mDataList.add(new timelineViewModel("Visit to Room A45","09:00 - 09:06","","Disinfected 30s after entry"));
+        mDataList.add(new timelineViewModel("Visit to Room A47","09:23 - 09:24","",""));
+        mDataList.add(new timelineViewModel("Visit to Room A35","09:35 - 09:46","10",""));
+        mDataList.add(new timelineViewModel("Visit to Room A35","10:00 - 10:02","10","Disinfected 20s after entry"));
+        mDataList.add(new timelineViewModel("Visit to Room A73","10:02 - 10:07","10","Disinfected 30s after entry"));
+
+
+    }
+
+    private void initAnimations(){
 
         status_text = findViewById(R.id.status_text);
 
@@ -84,6 +115,9 @@ public class liveStatusActivity extends AppCompatActivity {
         tracking_symbol = findViewById(R.id.animation_tracking_symbol);
 
         loading_rainbow.setRepeatCount(5);
+
+
+
         loading_rainbow.addAnimatorListener(new Animator.AnimatorListener() {
 
             @Override
@@ -139,6 +173,27 @@ public class liveStatusActivity extends AppCompatActivity {
 
         });
 
+        tracking_symbol.addAnimatorListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animator) {
+                status_text.setText(R.string.tracking_status_text);
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animator) {
+
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animator) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animator) {
+
+            }
+        });
         tracking_symbol.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -148,16 +203,8 @@ public class liveStatusActivity extends AppCompatActivity {
                 //---- Your code here------
             }
         });
-    }
-
-
-    private void animationProgression(){
-
-
 
     }
-
-
 
     private void changeState() {
         if (flag == 0) {
@@ -171,28 +218,5 @@ public class liveStatusActivity extends AppCompatActivity {
             flag = 0;
             //---- Your code here------
         }
-    }
-
-    private void initRecyclerView(){
-
-        mLayoutManager =  new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
-        RecyclerView recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(mLayoutManager);
-
-        mAdapter = new timelineViewAdapter(this, mDataList);
-
-        recyclerView.setAdapter(mAdapter);
-
-    }
-
-    private void setDataListItems(){
-
-        mDataList.add(new timelineViewModel("Visit to Room 123","09:00","10","HHE detected 30s after entry"));
-        mDataList.add(new timelineViewModel("Visit to Room 123","09:00","10","HHE detected 30s after entry"));
-        mDataList.add(new timelineViewModel("Visit to Room 123","09:00","10","HHE detected 30s after entry"));
-        mDataList.add(new timelineViewModel("Visit to Room 123","09:00","10","HHE detected 30s after entry"));
-        mDataList.add(new timelineViewModel("Visit to Room 123","09:00","10","HHE detected 30s after entry"));
-
-
     }
 }
