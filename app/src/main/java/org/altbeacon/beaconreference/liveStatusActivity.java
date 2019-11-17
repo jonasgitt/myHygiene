@@ -1,6 +1,7 @@
 package org.altbeacon.beaconreference;
 
 import android.animation.Animator;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.airbnb.lottie.LottieAnimationView;
@@ -47,13 +48,16 @@ public class liveStatusActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    mTextMessage.setText(R.string.title_home);
+                   // mTextMessage.setText(R.string.title_home);
+
                     return true;
                 case R.id.navigation_dashboard:
-                    mTextMessage.setText(R.string.title_dashboard);
+
+
+                  //  mTextMessage.setText(R.string.title_dashboard);
                     return true;
                 case R.id.navigation_notifications:
-                    mTextMessage.setText(R.string.title_notifications);
+                 //   mTextMessage.setText(R.string.title_notifications);
                     return true;
             }
             return false;
@@ -67,7 +71,7 @@ public class liveStatusActivity extends AppCompatActivity {
         BottomNavigationView navView = findViewById(R.id.nav_view);
         mTextMessage = findViewById(R.id.message);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
+        navView.setSelectedItemId(R.id.navigation_dashboard);
 
         //Initialize Timeline
         setDataListItems();
