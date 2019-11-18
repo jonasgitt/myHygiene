@@ -1,6 +1,8 @@
 package org.altbeacon.beaconreference;
 
+import android.content.ComponentName;
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -9,6 +11,25 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.Chart;
+import com.github.mikephil.charting.charts.CombinedChart;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.CombinedData;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
+import com.github.mikephil.charting.utils.ColorTemplate;
+
+import java.util.ArrayList;
 
 
 /**
@@ -60,14 +81,124 @@ public class statsFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_stats, container, false);
+        View view = inflater.inflate(R.layout.fragment_stats, container, false);
+
+        CombinedChart chart = (CombinedChart) view.findViewById(R.id.progress_bar_chart);
+        createProgressChart(chart);
+
+
+
+        return view;
     }
+
+    private void createProgressChart(CombinedChart chart){
+
+        chart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
+        chart.getAxisRight().setEnabled(false);
+        chart.getAxisLeft().setEnabled(false);
+
+        Legend l = chart.getLegend();
+        l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
+        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
+        l.setOrientation(Legend.LegendOrientation.HORIZONTAL);
+        l.setDrawInside(true);
+
+        CombinedData data = new CombinedData();
+
+        data.setData(generateLineData());
+        data.setData(generateBarData());
+
+        XAxis xAxis = chart.getXAxis();
+        final String[] weekdays = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"}; // Your List / array with String Values For X-axis Labels
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(weekdays));
+
+
+        chart.setData(data);
+        chart.invalidate();
+
+
+    }
+    private final int count = 12;
+    private LineData generateLineData() {
+
+        LineData d = new LineData();
+
+        ArrayList<Entry> entries1 = new ArrayList<>();
+
+
+        entries1.add(new Entry(1, 260));
+        entries1.add(new Entry(2, 255));
+        entries1.add(new Entry(3, 250));
+        entries1.add(new Entry(4, 260));
+        entries1.add(new Entry(5, 278));
+        entries1.add(new Entry(6, 290));
+        entries1.add(new Entry(7, 278));
+        entries1.add(new Entry(8, 299));
+        entries1.add(new Entry(9, 297));
+        entries1.add(new Entry(10, 310));
+        entries1.add(new Entry(11, 305));
+        entries1.add(new Entry(12, 288));
+
+        LineDataSet set = new LineDataSet(entries1, "Disinfections");
+        set.setColor(Color.rgb(55, 0, 179));
+
+        set.setLineWidth(2.5f);
+        set.setColor(Color.rgb(55, 0, 179));
+        set.setCircleRadius(5f);
+        set.setColor(Color.rgb(55, 0, 179));
+        set.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+        set.setDrawValues(true);
+        set.setValueTextSize(10f);
+        set.setColor(Color.rgb(55, 0, 179));
+
+        set.setAxisDependency(YAxis.AxisDependency.LEFT);
+        d.addDataSet(set);
+
+        return d;
+    }
+
+    private BarData generateBarData() {
+
+        ArrayList<BarEntry> entries1 = new ArrayList<>();
+
+        entries1.add(new BarEntry(1, 350));
+        entries1.add(new BarEntry(2, 330));
+        entries1.add(new BarEntry(3, 345));
+        entries1.add(new BarEntry(4, 321));
+        entries1.add(new BarEntry(5, 342));
+        entries1.add(new BarEntry(6, 333));
+        entries1.add(new BarEntry(7, 352));
+        entries1.add(new BarEntry(8, 324));
+        entries1.add(new BarEntry(9, 301));
+        entries1.add(new BarEntry(10, 355));
+        entries1.add(new BarEntry(11, 325));
+        entries1.add(new BarEntry(12, 352));
+
+        BarDataSet set1 = new BarDataSet(entries1, "Room Entries");
+        set1.setColor(Color.rgb(98, 0, 238));
+        set1.setColor(Color.rgb(98, 0, 238));
+        set1.setValueTextSize(10f);
+        set1.setAxisDependency(YAxis.AxisDependency.LEFT);
+
+        float barWidth = 0.6f;
+
+        BarData d = new BarData(set1);
+        d.setBarWidth(barWidth);
+
+        return d;
+    }
+
+
+
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

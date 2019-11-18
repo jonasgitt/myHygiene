@@ -3,12 +3,60 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".statsFragment">
+    tools:context=".statsFragment"
+    android:padding="5dp">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Your Progress"
+                android:textStyle="bold"/>
+
+            <com.github.mikephil.charting.charts.CombinedChart
+                android:id="@+id/progress_bar_chart"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/barchart_height">
+
+            </com.github.mikephil.charting.charts.CombinedChart>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="15dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="How you compare" />
+
+            <com.github.mikephil.charting.charts.BarChart
+                android:id = "@+id/comparison_barchart"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/barchart_height">
+
+            </com.github.mikephil.charting.charts.BarChart>
+
+
+
+
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
 
 </FrameLayout>
