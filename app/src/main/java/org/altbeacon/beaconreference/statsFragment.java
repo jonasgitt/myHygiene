@@ -94,10 +94,68 @@ public class statsFragment extends Fragment {
         CombinedChart chart = (CombinedChart) view.findViewById(R.id.progress_bar_chart);
         createProgressChart(chart);
 
+        BarChart barchart = (BarChart) view.findViewById(R.id.comparison_barchart);
 
+        createComparisonChart(barchart);
 
         return view;
     }
+
+    private void createComparisonChart(BarChart chart){
+
+        chart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
+        chart.getAxisRight().setEnabled(false);
+        chart.getAxisLeft().setEnabled(false);
+        chart.getLegend().setEnabled(false);
+        chart.setData(generateComparisonData());
+        chart.invalidate();
+    }
+
+    private BarData generateComparisonData(){
+
+        ArrayList<BarEntry> entries1 = new ArrayList<>();
+
+        entries1.add(new BarEntry(0.4f,2.3f));
+        entries1.add(new BarEntry(0.8f,4.3f));
+        entries1.add(new BarEntry(1.2f,6.1f));
+        entries1.add(new BarEntry(1.6f,7.5f));
+        entries1.add(new BarEntry(2f,8f));
+        entries1.add(new BarEntry(2.4f,8f));
+        entries1.add(new BarEntry(2.8f,7.8f));
+        entries1.add(new BarEntry(3.2f,7.2f));
+        entries1.add(new BarEntry(3.6f,6.2f));
+        entries1.add(new BarEntry(4f,5.4f));
+        entries1.add(new BarEntry(4.4f,4.6f));
+        entries1.add(new BarEntry(4.8f,3.9f));
+        entries1.add(new BarEntry(5.2f,3.2f));
+        entries1.add(new BarEntry(5.6f,2.5f));
+        entries1.add(new BarEntry(6f,2f));
+        entries1.add(new BarEntry(6.4f,1.6f));
+        entries1.add(new BarEntry(6.8f,1.25f));
+        entries1.add(new BarEntry(7.2f,1f));
+        entries1.add(new BarEntry(7.6f,0.95f));
+        entries1.add(new BarEntry(8f,0.9f));
+        entries1.add(new BarEntry(8.4f,0.85f));
+        entries1.add(new BarEntry(8.8f,0.82f));
+        entries1.add(new BarEntry(9.2f,0.81f));
+        entries1.add(new BarEntry(9.6f,0.81f));
+        entries1.add(new BarEntry(10f,0.81f));
+
+
+        BarDataSet set1 = new BarDataSet(entries1, "Room Entries");
+        set1.setColor(Color.rgb(98, 0, 238));
+        set1.setColor(Color.rgb(98, 0, 238));
+        set1.setValueTextSize(10f);
+        set1.setAxisDependency(YAxis.AxisDependency.LEFT);
+
+        float barWidth = 0.2f;
+
+        BarData d = new BarData(set1);
+        d.setBarWidth(barWidth);
+
+        return d;
+    }
+
 
     private void createProgressChart(CombinedChart chart){
 
@@ -124,9 +182,9 @@ public class statsFragment extends Fragment {
         chart.setData(data);
         chart.invalidate();
 
-
     }
-    private final int count = 12;
+
+
     private LineData generateLineData() {
 
         LineData d = new LineData();
