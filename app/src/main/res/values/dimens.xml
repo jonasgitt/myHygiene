@@ -9,4 +9,5 @@
     <dimen name="cardview_elevation">3dp</dimen>
     <dimen name="card_image_margin">3dp</dimen>
     <dimen name="barchart_height">240dp</dimen>
+    <dimen name="graph_padding">15dp</dimen>
 </resources>

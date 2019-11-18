@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.charts.CombinedChart;
+import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
@@ -26,9 +27,13 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.github.mikephil.charting.formatter.PercentFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.github.mikephil.charting.utils.ViewPortHandler;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 
@@ -105,9 +110,16 @@ public class statsFragment extends Fragment {
 
         chart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
         chart.getAxisRight().setEnabled(false);
-        chart.getAxisLeft().setEnabled(false);
+        YAxis yAxis = chart.getAxisLeft();
+        yAxis.setValueFormatter(new customPercentFormatter());
+
         chart.getLegend().setEnabled(false);
         chart.setData(generateComparisonData());
+
+        chart.highlightValue(4.4f,0, false);
+        chart.setHighlightPerTapEnabled(false);
+        chart.setHighlightPerDragEnabled(false);
+        chart.getXAxis();
         chart.invalidate();
     }
 
@@ -145,10 +157,15 @@ public class statsFragment extends Fragment {
         BarDataSet set1 = new BarDataSet(entries1, "Room Entries");
         set1.setColor(Color.rgb(98, 0, 238));
         set1.setColor(Color.rgb(98, 0, 238));
-        set1.setValueTextSize(10f);
+        set1.setValueTextSize(0f);
         set1.setAxisDependency(YAxis.AxisDependency.LEFT);
 
-        float barWidth = 0.2f;
+        set1.setHighLightColor(Color.RED);
+
+        set1.setGradientColor(Color.rgb(98, 0, 238),Color.rgb(55, 0, 179) );
+
+
+        float barWidth = 0.3f;
 
         BarData d = new BarData(set1);
         d.setBarWidth(barWidth);
@@ -219,6 +236,8 @@ public class statsFragment extends Fragment {
 
         set.setAxisDependency(YAxis.AxisDependency.LEFT);
         d.addDataSet(set);
+
+
 
         return d;
     }
@@ -295,5 +314,20 @@ public class statsFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+
+    public class customPercentFormatter extends ValueFormatter {
+
+        public DecimalFormat mFormat;
+
+        public customPercentFormatter() {
+            mFormat = new DecimalFormat("###,###,###");
+        }
+
+        @Override
+        public String getFormattedValue(float value) {
+            return mFormat.format(value) + "%";
+        }
     }
 }
