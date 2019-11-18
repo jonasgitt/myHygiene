@@ -11,9 +11,9 @@
         android:minHeight="?attr/actionBarSize"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:titleTextColor="@android:color/black"
+        app:titleTextColor="@android:color/white"
         app:title="@string/app_name"
-        android:background="?attr/colorPrimary">
+        android:background="@color/colorPrimaryLight">
     </androidx.appcompat.widget.Toolbar>
 
     <FrameLayout
@@ -31,6 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         app:menu="@menu/bottom_nav_menu"
-        android:background="?android:attr/windowBackground"/>
+        android:background="?android:attr/windowBackground"
+        app:itemBackground="@color/colorPrimaryLight"/>
 
 </RelativeLayout>
