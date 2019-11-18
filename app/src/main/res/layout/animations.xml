@@ -1,37 +1,55 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:weightSum="4"
-    >
+    android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="3">
-
-        <TextView
-            android:id="@+id/status_text"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-
-            android:gravity="center"
-            android:textSize="20dp"
-            />
-
-    </LinearLayout>
+    <!--android:weightSum="4"-->
 
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1">
+    <!--<LinearLayout-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_weight="3">-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/status_text"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+
+            <!--android:gravity="center"-->
+            <!--android:textSize="20dp"-->
+            <!--/>-->
+
+    <!--</LinearLayout>-->
+
+
+    <!--<LinearLayout-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="match_parent">-->
+        <!--&lt;!&ndash;android:layout_weight="1"&ndash;&gt;-->
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/live_status_header"
+        android:padding="4dp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
 
 
         <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/anim_framelayout"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            >
 
 
 
@@ -40,8 +58,8 @@
             <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/animation_alert_symbol"
                 android:layout_gravity="center"
-                android:layout_width="89dp"
-                android:layout_height="83dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:visibility="gone"
 
 
@@ -54,8 +72,8 @@
             <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/animation_loading_rainbow"
                 android:layout_gravity="center"
-                android:layout_width="56dp"
-                android:layout_height="57dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:visibility="gone"
 
 
@@ -67,9 +85,9 @@
             <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/animation_checked_done"
                 android:layout_gravity="center"
-                android:layout_width="111dp"
+                android:layout_width="60dp"
 
-                android:layout_height="107dp"
+                android:layout_height="60dp"
                 android:visibility="gone"
 
 
@@ -80,8 +98,8 @@
 
             <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/animation_tracking_symbol"
-                android:layout_width="89dp"
-                android:layout_height="83dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:layout_gravity="center"
 
                 app:lottie_autoPlay="true"
@@ -90,13 +108,20 @@
                 app:lottie_speed="1.0" />
         </FrameLayout>
 
+        <TextView
+            android:id="@+id/status_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
 
-    </LinearLayout>
+            app:layout_constraintTop_toBottomOf="@+id/anim_framelayout"
+            app:layout_constraintStart_toStartOf="@+id/anim_framelayout"
+            app:layout_constraintEnd_toEndOf="@+id/anim_framelayout"
+
+            android:textSize="12sp"
+            />
 
 
 
 
 
-
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

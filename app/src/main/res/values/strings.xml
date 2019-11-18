@@ -4,16 +4,16 @@
     <string name="title_activity_live_status">Dashboard</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_notifications">Insights</string>
 
     <string name="loading_text">Please disinfect</string>
-    <string name="alert_text">Have you forgotten to disinfect?</string>
+    <string name="alert_text">Did you forget?</string>
     <string name="disinfected_text">Well done!</string>
     <string name="no_hhe_text">No HHEs detected in this room.</string>
-    <string name="timeline_header_string">Timeline</string>
-    <string name="performance_header_string">Performance</string>
+    <string name="timeline_header_string">Timeline for Tuesday, November 26th </string>
+    <string name="performance_header_string">Daily summary</string>
     <string name="live_status_header">Status</string>
-    <string name="tracking_status_text">Remember to disinfect when you enter a patient room.</string>
+    <string name="tracking_status_text">Tracking…</string>
     <string name="title_activity_news">NewsActivity</string>
     <string name="title_activity_base">BaseActivity</string>
 

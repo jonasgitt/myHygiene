@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/performance_header_string"
-        android:padding="4dp"
+        android:padding="@dimen/performance_textview_padding"
         android:textStyle="bold"
 
         />
@@ -20,15 +20,18 @@
         android:layout_height="wrap_content"
         android:id="@+id/withoutHHE"
         android:textStyle="bold"
-        android:text="Number of room entries without HHE........ 8"/>
+        android:paddingLeft="@dimen/performance_textview_padding"
+        android:text="8 room entries without disinfection"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/numRoomEntries"
-        android:text="Total number of room entries..................... 10"/>
+        android:paddingLeft="@dimen/performance_textview_padding"
+        android:text="10 room entries"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/numHHEs"
-        android:text="Total number of HHEs................................... 2"/>
+        android:paddingLeft="@dimen/performance_textview_padding"
+        android:text="2 disinfections"/>
 </LinearLayout>
