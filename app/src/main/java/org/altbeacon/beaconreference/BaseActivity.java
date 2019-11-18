@@ -25,6 +25,7 @@ public class BaseActivity extends AppCompatActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
 
+
         //I added this if statement to keep the selected fragment when rotating the device
 //        if (savedInstanceState == null) {
 //            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
@@ -41,6 +42,7 @@ public class BaseActivity extends AppCompatActivity {
                     switch (item.getItemId()) {
                         case R.id.navigation_home:
                             selectedFragment = new newsFragment();
+
                             break;
                         case R.id.navigation_dashboard:
                             selectedFragment = new dashboardFragment();
