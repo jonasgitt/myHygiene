@@ -65,9 +65,9 @@
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="5dp"
-            android:padding="6dp"
-            app:cardElevation="10dp"
+            android:layout_margin="@dimen/card_margin"
+            android:padding="@dimen/card_padding"
+            app:cardElevation="@dimen/cardview_elevation"
             app:cardCornerRadius="4dp"
             app:strokeWidth="5dp"
             >
