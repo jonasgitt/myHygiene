@@ -1,6 +1,12 @@
 package org.altbeacon.beaconreference;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -8,6 +14,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -16,6 +24,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import org.altbeacon.beaconreference.R;
 
 public class BaseActivity extends AppCompatActivity {
+
+    private static final String CHANNEL_ID = "myChannelID";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,12 +41,15 @@ public class BaseActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                 new newsFragment()).commit();
 //
-
+        createNotificationChannel();
         //I added this if statement to keep the selected fragment when rotating the device
 //        if (savedInstanceState == null) {
 //            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
 //                    new HomeFragment()).commit();
 //        }
+
+
+
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
@@ -82,6 +95,10 @@ public class BaseActivity extends AppCompatActivity {
                 break;
             case R.id.option_about:
                 selectedFragment = new newsFragment();
+                vibrate();
+                sendNotification();
+
+
             default:
                 break;
         }
@@ -91,6 +108,52 @@ public class BaseActivity extends AppCompatActivity {
         ft.replace(R.id.fragment_container,
                 selectedFragment).commit();
         return true;
+    }
+
+    private void vibrate() {
+        if (Build.VERSION.SDK_INT >= 26) {
+            long[] pattern = new long[]{1000, 200, 300, 400, 500, 400, 300, 200, 400};
+            int[] amplituds = new int[]{255,255,255,255,255,255,255,255,255};
+            ((Vibrator) getSystemService(VIBRATOR_SERVICE)).vibrate(VibrationEffect.createWaveform(pattern, -1));
+        } else {
+            ((Vibrator) getSystemService(VIBRATOR_SERVICE)).vibrate(1000);
+        }
+
+    }
+
+    private void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
+            CharSequence name = getString(R.string.channel_name);
+            String description = getString(R.string.channel_description);
+
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+
+            channel.enableVibration(false);
+            channel.setSound(null, null);
+
+
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
+
+    private void sendNotification(){
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_alert_nohhe)
+                .setContentTitle(getString(R.string.notification_title_text))
+                .setContentText(getString(R.string.notification_content_text))
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+        notificationManager.notify(1, builder.build());
     }
 
 }

@@ -26,6 +26,10 @@
     <string name="LearnMoreData"><a href="www.google.com">Find out how your data could help save lives</a></string>
     <string name="comparison_result">Your hand hygiene is better than 73% of users. Keep it up!</string>
     <string name="comparison_chart_title">Your hand hygiene compared to your colleagues</string>
+    <string name="channel_name">myChannel</string>
+    <string name="channel_description">myChannelDescription</string>
+    <string name="notification_content_text">You have been in this room for 1 minute and haven\'t disinfected.</string>
+    <string name="notification_title_text">Did you forget to disinfect your hands?</string>
 
 
 </resources>

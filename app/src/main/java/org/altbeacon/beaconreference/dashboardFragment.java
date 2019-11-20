@@ -5,6 +5,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -274,6 +275,7 @@ public class dashboardFragment extends Fragment {
                 //---- Your code here------
                 mDataList.add(0, new timelineViewModel("Visit to Room HG E41, ETH Zurich Hauptgebäude","10:30 - 10:35","10","Disinfected 15s after entry"));
                 mAdapter.notifyDataSetChanged();
+
             }
         });
 
