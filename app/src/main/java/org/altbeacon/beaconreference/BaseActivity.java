@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -76,14 +77,17 @@ public class BaseActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.option_settings:
                 selectedFragment = new settingsFragment();
-                Toast.makeText(this, "This is teh option help", Toast.LENGTH_LONG).show();
+//                Toast.makeText(this, "This is teh option help", Toast.LENGTH_LONG).show();
                 break;
             case R.id.option_about:
-                //do something
+                selectedFragment = new newsFragment();
             default:
                 break;
         }
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+//        ft.setCustomAnimations(R.anim.slide_in_bottom, R.anim.slide_out_top);
+
+        ft.replace(R.id.fragment_container,
                 selectedFragment).commit();
         return true;
     }
