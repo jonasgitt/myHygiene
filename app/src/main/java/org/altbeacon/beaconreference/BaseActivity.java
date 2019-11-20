@@ -1,7 +1,9 @@
 package org.altbeacon.beaconreference;
 
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,6 +27,8 @@ public class BaseActivity extends AppCompatActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
 
+
+//
 
         //I added this if statement to keep the selected fragment when rotating the device
 //        if (savedInstanceState == null) {
@@ -58,4 +62,30 @@ public class BaseActivity extends AppCompatActivity {
                     return true;
                 }
             };
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.options_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Fragment selectedFragment = null;
+        switch (item.getItemId()) {
+            case R.id.option_settings:
+                selectedFragment = new settingsFragment();
+                Toast.makeText(this, "This is teh option help", Toast.LENGTH_LONG).show();
+                break;
+            case R.id.option_about:
+                //do something
+            default:
+                break;
+        }
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                selectedFragment).commit();
+        return true;
+    }
+
 }

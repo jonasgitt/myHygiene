@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        app:key="advanced"
+        app:title="Reminder Settings">
+
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="example_switch"
+            android:summary="Your phone will vibrate if you don't disinfect"
+            android:title="Enable realtime reminders " />
+
+        <SeekBarPreference
+            android:key="seek_bar_key"
+            android:title="Time to reminder"
+            android:summary="Time in seconds between entering a room  and receiving a reminder to disinfect"
+            app:showSeekBarValue = "true"
+            android:dependency = "example_switch"
+            />
+
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:key="advanced"
+        app:title="Privacy Settings"
+        >
+        <!--Learn how your data could help save lives.">-->
+
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="data_sharing"
+            android:summary="Your fully anonymized data will be shared with your hospital hygienists"
+            android:title= "Allow data sharing" />
+
+        <SwitchPreference
+            android:title="Include position information"
+            android:summary="Hygienists will be able to see whether you are a doctor or a nurse."
+            android:dependency = "data_sharing"
+            />
+
+        <SwitchPreference
+            android:title="Include department information"
+            android:summary="Hygienists will be able to see which department you are in."
+            android:dependency = "data_sharing"
+            />
+
+        <Preference
+            android:summary  ="@string/LearnMoreData"
+            />
+
+    </PreferenceCategory>
+
+
+</androidx.preference.PreferenceScreen>
