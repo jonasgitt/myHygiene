@@ -280,15 +280,22 @@ public class dashboardFragment extends Fragment {
 
             }
         });
-        tracking_symbol.setOnClickListener(new View.OnClickListener() {
+
+        alert_symbol.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                tracking_symbol.setVisibility(View.GONE);
-                loading_rainbow.setVisibility(View.VISIBLE);
-                loading_rainbow.playAnimation();
-                //---- Your code here------
+                tracking_symbol.setVisibility(View.VISIBLE);
+                loading_rainbow.setVisibility(View.GONE);
+                alert_symbol.setVisibility(View.GONE);
+                tracking_symbol.playAnimation();
+
+                //Update with new data-point
                 mDataList.add(0, new timelineViewModel("Visit to Room HG E41, ETH Zurich Hauptgebäude","10:30 - 10:35","10","Disinfected 15s after entry"));
                 mAdapter.notifyDataSetChanged();
+
+                TextView textView = getView().findViewById(R.id.numRoomEntries);
+                String str = "\u2022 Total number of room entries........... 9";
+                textView.setText( str);
 
             }
         });
