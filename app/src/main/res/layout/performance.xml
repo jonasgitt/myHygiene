@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/performance_header_string"
-        android:padding="@dimen/performance_textview_padding"
+        android:padding="@dimen/card_title_padding"
         android:textStyle="bold"
 
         />

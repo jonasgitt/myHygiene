@@ -24,6 +24,8 @@
     <string name="settings_options_title">Settings</string>
 
     <string name="LearnMoreData"><a href="www.google.com">Find out how your data could help save lives</a></string>
+    <string name="comparison_result">Your hand hygiene is better than 73% of users. Keep it up!</string>
+    <string name="comparison_chart_title">Your hand hygiene compared to your colleagues</string>
 
 
 </resources>

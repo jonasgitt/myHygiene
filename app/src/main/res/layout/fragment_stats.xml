@@ -36,6 +36,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Your Progress"
+                android:padding="@dimen/card_title_padding"
                 android:textStyle="bold"/>
 
             <com.github.mikephil.charting.charts.CombinedChart
@@ -72,7 +73,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
-                android:text="How you compare to other staff members" />
+                android:padding="@dimen/card_title_padding"
+                android:text="@string/comparison_chart_title" />
 
             <!--<com.google.android.material.button.MaterialButtonToggleGroup-->
                 <!--android:id="@+id/toggleGroup"-->
@@ -100,6 +102,12 @@
                     <!--/>-->
             <!--</com.google.android.material.button.MaterialButtonToggleGroup>-->
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/card_title_padding"
+                    android:textStyle="italic"
+                    android:text="@string/comparison_result"/>
 
             <com.github.mikephil.charting.charts.BarChart
                 android:id = "@+id/comparison_barchart"
