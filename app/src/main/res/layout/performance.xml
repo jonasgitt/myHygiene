@@ -18,20 +18,21 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/withoutHHE"
-        android:textStyle="bold"
-        android:paddingLeft="@dimen/performance_textview_padding"
-        android:text="8 room entries without disinfection"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/numRoomEntries"
         android:paddingLeft="@dimen/performance_textview_padding"
-        android:text="10 room entries"/>
+        android:text="&#8226; Total number of room entries........... 8"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/numHHEs"
         android:paddingLeft="@dimen/performance_textview_padding"
-        android:text="2 disinfections"/>
+        android:text="&#8226; Total number of disinfections........... 5"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/withoutHHE"
+
+        android:paddingLeft="@dimen/performance_textview_padding"
+        android:text="&#8226; Room entries without disinfection.... 3"/>
 </LinearLayout>

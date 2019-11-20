@@ -47,18 +47,22 @@ public class timelineViewAdapter extends RecyclerView.Adapter<timelineViewAdapte
             holder.mDate.setVisibility(View.VISIBLE);
             holder.mDate.setText(mModel.date);
         }
+
         holder.mMessage.setText(mModel.message);
 
+        Resources res = holder.itemView.getContext().getResources();
 
         if (mModel.HHEtime == ""){
             holder.mTimelineView.setMarkerColor(R.color.no_hhe_color);
             holder.mHHEs.setText(R.string.no_hhe_text);
 
-            Resources res = holder.itemView.getContext().getResources();
+
 
             holder.mTimelineView.setMarker(res.getDrawable(R.drawable.ic_alert_nohhe));
         }
         else {
+
+            holder.mTimelineView.setMarker(res.getDrawable(R.drawable.ic_marker_default));
             holder.mHHEs.setText(mModel.HHEtime);
         }
 

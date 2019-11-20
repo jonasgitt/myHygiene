@@ -165,11 +165,14 @@ public class dashboardFragment extends Fragment {
 
     private void setDataListItems(){
 
-        mDataList.add(new timelineViewModel("Visit to Room A45","09:00 - 09:06","","Disinfected 30s after entry"));
-        mDataList.add(new timelineViewModel("Visit to Room A47","09:23 - 09:24","",""));
-        mDataList.add(new timelineViewModel("Visit to Room A35","09:35 - 09:46","10",""));
-        mDataList.add(new timelineViewModel("Visit to Room A35","10:00 - 10:02","10","Disinfected 20s after entry"));
-        mDataList.add(new timelineViewModel("Visit to Room A73","10:02 - 10:07","10","Disinfected 30s after entry"));
+        mDataList.add(new timelineViewModel("Visit to Room A80, Cardiology Clinic","10:30 - 10:35","10",""));
+        mDataList.add(new timelineViewModel("Visit to Room A64, Cardiology Clinic","10:12 - 10:15","10","Disinfected 120s after entry"));
+        mDataList.add(new timelineViewModel("Visit to Room A63, Cardiology Clinic","10:01 - 10:06","10","Disinfected 3s after entry"));
+        mDataList.add(new timelineViewModel("Visit to Room A71, Cardiology Clinic","09:57 - 10:00","10","Disinfected 12s after entry"));
+        mDataList.add(new timelineViewModel("Visit to Room A35, Cardiology Clinic","09:50 - 09:55","10","Disinfected 20s after entry"));
+        mDataList.add(new timelineViewModel("Visit to Room A35, Cardiology Clinic","09:35 - 09:46","10",""));
+        mDataList.add(new timelineViewModel("Visit to Room A47, Cardiology Clinic","09:23 - 09:24","",""));
+        mDataList.add(new timelineViewModel("Visit to Room A45, Cardiology Clinic","09:00 - 09:06","","Disinfected 30s after entry"));
 
 
     }
@@ -269,6 +272,8 @@ public class dashboardFragment extends Fragment {
                 loading_rainbow.setVisibility(View.VISIBLE);
                 loading_rainbow.playAnimation();
                 //---- Your code here------
+                mDataList.add(0, new timelineViewModel("Visit to Room HG E41, ETH Zurich Hauptgebäude","10:30 - 10:35","10","Disinfected 15s after entry"));
+                mAdapter.notifyDataSetChanged();
             }
         });
 
