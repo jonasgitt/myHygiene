@@ -155,14 +155,14 @@ public class statsFragment extends Fragment {
 
 
         BarDataSet set1 = new BarDataSet(entries1, "Room Entries");
-        set1.setColor(Color.rgb(98, 0, 238));
-        set1.setColor(Color.rgb(98, 0, 238));
+        set1.setColor(Color.rgb(187,134,252));
+
         set1.setValueTextSize(0f);
         set1.setAxisDependency(YAxis.AxisDependency.LEFT);
 
         set1.setHighLightColor(Color.RED);
 
-        set1.setGradientColor(Color.rgb(98, 0, 238),Color.rgb(55, 0, 179) );
+        //set1.setGradientColor(Color.rgb(98, 0, 238),Color.rgb(55, 0, 179) );
 
 
         float barWidth = 0.3f;
@@ -227,8 +227,9 @@ public class statsFragment extends Fragment {
 
         set.setLineWidth(2.5f);
         set.setColor(Color.rgb(55, 0, 179));
+
         set.setCircleRadius(5f);
-        set.setColor(Color.rgb(55, 0, 179));
+        set.setCircleColor(Color.rgb(55, 0, 179));
         set.setMode(LineDataSet.Mode.CUBIC_BEZIER);
         set.setDrawValues(true);
         set.setValueTextSize(10f);
@@ -260,8 +261,9 @@ public class statsFragment extends Fragment {
         entries1.add(new BarEntry(12, 352));
 
         BarDataSet set1 = new BarDataSet(entries1, "Room Entries");
-        set1.setColor(Color.rgb(98, 0, 238));
-        set1.setColor(Color.rgb(98, 0, 238));
+
+        set1.setColor(Color.rgb(187,134,252));
+
         set1.setValueTextSize(10f);
         set1.setAxisDependency(YAxis.AxisDependency.LEFT);
 

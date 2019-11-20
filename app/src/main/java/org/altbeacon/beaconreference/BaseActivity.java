@@ -42,6 +42,8 @@ public class BaseActivity extends AppCompatActivity {
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
+        myToolbar.setLogo(R.drawable.ic_launcher_dispenser);
+
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                 new newsFragment()).commit();
