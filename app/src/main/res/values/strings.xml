@@ -30,6 +30,7 @@
     <string name="channel_description">myChannelDescription</string>
     <string name="notification_content_text">You have been in this room for 1 minute and haven\'t disinfected.</string>
     <string name="notification_title_text">Did you forget to disinfect your hands?</string>
+    <string name="entered_room_toast">Room entry detected</string>
 
 
 </resources>

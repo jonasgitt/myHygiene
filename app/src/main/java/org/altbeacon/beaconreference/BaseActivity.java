@@ -7,8 +7,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewConfiguration;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -27,12 +29,15 @@ public class BaseActivity extends AppCompatActivity {
 
     private static final String CHANNEL_ID = "myChannelID";
 
+    BottomNavigationView bottomNav;
+    String bundleStatus = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
 
-        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
+        bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -56,6 +61,8 @@ public class BaseActivity extends AppCompatActivity {
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+
                     Fragment selectedFragment = null;
 
                     switch (item.getItemId()) {
@@ -69,6 +76,12 @@ public class BaseActivity extends AppCompatActivity {
                         case R.id.navigation_notifications:
                             selectedFragment = new statsFragment();
                             break;
+                    }
+
+                    if (bundleStatus!=null){
+                        Bundle bundle = new Bundle();
+                        bundle.putString("status",bundleStatus);
+                        selectedFragment.setArguments(bundle);
                     }
 
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
@@ -91,14 +104,9 @@ public class BaseActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.option_settings:
                 selectedFragment = new settingsFragment();
-//                Toast.makeText(this, "This is teh option help", Toast.LENGTH_LONG).show();
                 break;
             case R.id.option_about:
                 selectedFragment = new newsFragment();
-                vibrate();
-                sendNotification();
-
-
             default:
                 break;
         }
@@ -156,4 +164,33 @@ public class BaseActivity extends AppCompatActivity {
         notificationManager.notify(1, builder.build());
     }
 
+
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        int action = event.getAction();
+        int keyCode = event.getKeyCode();
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_VOLUME_UP:
+                if (action == KeyEvent.ACTION_UP) {
+                    Toast.makeText(this, R.string.entered_room_toast, Toast.LENGTH_LONG).show();
+                    bundleStatus =  "loading";
+                    navListener.onNavigationItemSelected(bottomNav.getMenu().getItem(1));
+                    bottomNav.setSelectedItemId(R.id.navigation_dashboard);
+                }
+                return true;
+
+            case KeyEvent.KEYCODE_VOLUME_DOWN:
+                if (action == KeyEvent.ACTION_UP) {
+                        sendNotification();
+                        vibrate();
+                        bundleStatus =  "alerting";
+                        navListener.onNavigationItemSelected(bottomNav.getMenu().getItem(1));
+                        bottomNav.setSelectedItemId(R.id.navigation_dashboard);
+                }
+                return true;
+
+            default:
+                return super.dispatchKeyEvent(event);
+        }
+    }
 }

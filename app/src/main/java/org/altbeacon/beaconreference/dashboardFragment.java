@@ -109,6 +109,20 @@ public class dashboardFragment extends Fragment {
         initAnimations(view);
         initRecyclerView(view);
 
+        String status = "tracking";
+        if (getArguments()!=null)
+            status = getArguments().getString("status");
+
+        if (status == "alerting"){
+            tracking_symbol.setVisibility(View.GONE);
+            alert_symbol.setVisibility(View.VISIBLE);
+        }
+        if (status == "loading"){
+            tracking_symbol.setVisibility(View.GONE);
+            alert_symbol.setVisibility(View.GONE);
+            loading_rainbow.setVisibility(View.VISIBLE);
+        }
+
         return view;
     }
 
