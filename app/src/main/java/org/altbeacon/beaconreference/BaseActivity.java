@@ -84,6 +84,7 @@ public class BaseActivity extends AppCompatActivity {
                         Bundle bundle = new Bundle();
                         bundle.putString("status",bundleStatus);
                         selectedFragment.setArguments(bundle);
+//                        bundle.putList
                     }
 
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
@@ -188,6 +189,7 @@ public class BaseActivity extends AppCompatActivity {
                         bundleStatus =  "alerting";
                         navListener.onNavigationItemSelected(bottomNav.getMenu().getItem(1));
                         bottomNav.setSelectedItemId(R.id.navigation_dashboard);
+
                 }
                 return true;
 

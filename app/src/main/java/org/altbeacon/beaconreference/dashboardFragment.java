@@ -5,6 +5,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -52,7 +53,7 @@ public class dashboardFragment extends Fragment {
     int flag = 0;
 
 
-
+    Boolean addEvent = false;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -96,8 +97,9 @@ public class dashboardFragment extends Fragment {
         }
 
         //Initialize Timeline
-        setDataListItems();
-
+        if (savedInstanceState == null) {
+            setDataListItems();
+        }
     }
 
     @Override
@@ -123,6 +125,9 @@ public class dashboardFragment extends Fragment {
             loading_rainbow.setVisibility(View.VISIBLE);
         }
 
+        if (addEvent==true){
+
+        }
         return view;
     }
 
@@ -164,6 +169,12 @@ public class dashboardFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
+
 
 
     private void initRecyclerView(View view){
