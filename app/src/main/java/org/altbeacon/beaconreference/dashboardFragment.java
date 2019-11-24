@@ -19,8 +19,11 @@ import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 
 /**
@@ -36,6 +39,8 @@ public class dashboardFragment extends Fragment {
     private TextView mTextMessage;
 
     Boolean hasDispensed = false;
+
+//    String startTime;
 
     TextView status_text;
 
@@ -111,23 +116,40 @@ public class dashboardFragment extends Fragment {
         initAnimations(view);
         initRecyclerView(view);
 
-        String status = "tracking";
-        if (getArguments()!=null)
-            status = getArguments().getString("status");
+        String startTime = null;
+        String endTime = null;
 
+        String status = "tracking";
+        if (getArguments()!=null) {
+            status = getArguments().getString("status");
+            startTime = getArguments().getString("startTime");
+            endTime = getArguments().getString("endTime");
+        }
+
+        if (status=="tracking"){
+
+            tracking_symbol.setVisibility(View.VISIBLE);
+            alert_symbol.setVisibility(View.GONE);
+            loading_rainbow.setVisibility(View.GONE);
+
+            if (startTime!=null && endTime != null){
+                updateTimeline(startTime, endTime, view);
+            }
+
+
+        }
         if (status == "alerting"){
             tracking_symbol.setVisibility(View.GONE);
             alert_symbol.setVisibility(View.VISIBLE);
         }
-        if (status == "loading"){
+        else if (status == "loading"){
             tracking_symbol.setVisibility(View.GONE);
             alert_symbol.setVisibility(View.GONE);
             loading_rainbow.setVisibility(View.VISIBLE);
+//            startTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
         }
 
-        if (addEvent==true){
 
-        }
         return view;
     }
 
@@ -213,7 +235,7 @@ public class dashboardFragment extends Fragment {
         checked_done = view.findViewById(R.id.animation_checked_done);
         tracking_symbol = view.findViewById(R.id.animation_tracking_symbol);
 
-        loading_rainbow.setRepeatCount(5);
+        loading_rainbow.setRepeatCount(10);
 
         loading_rainbow.addAnimatorListener(new Animator.AnimatorListener() {
 
@@ -292,25 +314,48 @@ public class dashboardFragment extends Fragment {
             }
         });
 
-        alert_symbol.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                tracking_symbol.setVisibility(View.VISIBLE);
-                loading_rainbow.setVisibility(View.GONE);
-                alert_symbol.setVisibility(View.GONE);
-                tracking_symbol.playAnimation();
 
-                //Update with new data-point
-                mDataList.add(0, new timelineViewModel("Visit to Room HG E41, ETH Zurich Hauptgebäude","10:30 - 10:35","10","Disinfected 15s after entry"));
-                mAdapter.notifyDataSetChanged();
+//        alert_symbol.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                tracking_symbol.setVisibility(View.VISIBLE);
+//                loading_rainbow.setVisibility(View.GONE);
+//                alert_symbol.setVisibility(View.GONE);
+//                tracking_symbol.playAnimation();
+//
+//                //Update with new data-point
+//
+//                BaseActivity activity = (BaseActivity) getActivity();
+//                String startTime = activity.getStartTime();
+//                String endTime = activity.getEndTime();
+//
+//                String time = startTime + " - " + endTime;
+//                mDataList.add(0, new timelineViewModel("Visit to Room HG E41, ETH Zurich Hauptgebäude",time,"10","Disinfected 15s after entry"));
+//                mAdapter.notifyDataSetChanged();
+//
+//                TextView textView = getView().findViewById(R.id.numRoomEntries);
+//                String str = "\u2022 Total number of room entries........... 9";
+//                textView.setText( str);
+//
+//            }
+//        });
 
-                TextView textView = getView().findViewById(R.id.numRoomEntries);
-                String str = "\u2022 Total number of room entries........... 9";
-                textView.setText( str);
+    }
 
-            }
-        });
+    private void updateTimeline(String startTime, String endTime, View view){
 
+        tracking_symbol.setVisibility(View.VISIBLE);
+        loading_rainbow.setVisibility(View.GONE);
+        alert_symbol.setVisibility(View.GONE);
+        tracking_symbol.playAnimation();
+
+        String time = startTime + " - " + endTime;
+        mDataList.add(0, new timelineViewModel("Visit to Room HG E41, ETH Zurich Hauptgebäude",time,"10","Disinfected 15s after entry"));
+        mAdapter.notifyDataSetChanged();
+
+        TextView textView = view.findViewById(R.id.numRoomEntries);
+        String str = "\u2022 Total number of room entries........... 9";
+        textView.setText( str);
     }
 
 }

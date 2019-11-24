@@ -25,12 +25,21 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.altbeacon.beaconreference.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 public class BaseActivity extends AppCompatActivity {
 
     private static final String CHANNEL_ID = "myChannelID";
+    public  String startTime = null; // = "10:40:32";
+    public  Boolean hasEntered = false;
+    public  String endTime = null;
 
     BottomNavigationView bottomNav;
     String bundleStatus = null;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +92,9 @@ public class BaseActivity extends AppCompatActivity {
                     if (bundleStatus!=null){
                         Bundle bundle = new Bundle();
                         bundle.putString("status",bundleStatus);
+                        bundle.putString("startTime", startTime);
+                        bundle.putString("endTime", endTime);
+
                         selectedFragment.setArguments(bundle);
 //                        bundle.putList
                     }
@@ -175,8 +187,22 @@ public class BaseActivity extends AppCompatActivity {
         switch (keyCode) {
             case KeyEvent.KEYCODE_VOLUME_UP:
                 if (action == KeyEvent.ACTION_UP) {
-                    Toast.makeText(this, R.string.entered_room_toast, Toast.LENGTH_LONG).show();
-                    bundleStatus =  "loading";
+
+                    String toastString;
+                    if (!hasEntered) {
+                        toastString = getString(R.string.entered_room_toast);
+                        bundleStatus = "loading";
+                        hasEntered = true;
+                        startTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
+                    }
+                    else {
+                        toastString = getString(R.string.left_room_toast);
+                        bundleStatus = "tracking";
+                        hasEntered = false;
+                        endTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
+                    }
+
+                    Toast.makeText(this, toastString, Toast.LENGTH_LONG).show();
                     navListener.onNavigationItemSelected(bottomNav.getMenu().getItem(1));
                     bottomNav.setSelectedItemId(R.id.navigation_dashboard);
                 }
@@ -189,12 +215,23 @@ public class BaseActivity extends AppCompatActivity {
                         bundleStatus =  "alerting";
                         navListener.onNavigationItemSelected(bottomNav.getMenu().getItem(1));
                         bottomNav.setSelectedItemId(R.id.navigation_dashboard);
-
                 }
                 return true;
 
             default:
                 return super.dispatchKeyEvent(event);
         }
+    }
+
+
+    public Boolean hasEntered(){
+        return hasEntered;
+    }
+
+    public String getStartTime(){
+        return startTime;
+    }
+    public String getEndTime(){
+        return endTime;
     }
 }
