@@ -32,8 +32,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -462,6 +464,16 @@ public class BaseActivity extends AppCompatActivity  {
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
+                android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+        } else {
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                    REQUEST_ENABLE_BT);
+        }
+    }
 
     int arduinoCount = 0;
 
@@ -475,9 +487,9 @@ public class BaseActivity extends AppCompatActivity  {
                 public void onScanResult(int callbackType, final ScanResult result) {
                     super.onScanResult(callbackType, result);
 
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
+//                    runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
 
                             String str = result.getDevice().getName();
                             long elapsed = 0;
@@ -504,8 +516,8 @@ public class BaseActivity extends AppCompatActivity  {
                             }
 
                     }
-                    });
-                }
+//                    });
+//                }
                 @Override
                 public void onScanFailed(int errorCode) {
                     super.onScanFailed(errorCode);
