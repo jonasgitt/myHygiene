@@ -118,7 +118,8 @@ public class BaseActivity extends AppCompatActivity implements BeaconConsumer {
                             logToDisplay(fifo.toString());
                         }
                     }
-
+                   // beacon.get
+                    logToDisplay(beacon.getDataFields().toString());
 //                        logToDisplay("Distance :" + beacon.getDistance());
 //                        logToDisplay("RSSI: " + beacon.getRssi());
 //                        logToDisplay("AVG: " + beacon.getRunningAverageRssi());

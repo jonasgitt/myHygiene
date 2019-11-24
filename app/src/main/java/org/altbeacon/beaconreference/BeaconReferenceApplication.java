@@ -43,6 +43,10 @@ public class BeaconReferenceApplication extends Application implements Bootstrap
         beaconManager.getBeaconParsers().add(new BeaconParser().
                 setBeaconLayout(BeaconParser.EDDYSTONE_UID_LAYOUT));
 
+
+//        String str = "D00526D3-D7FE-329B-DE64-224A66DA25C2";
+//        beaconManager.getBeaconParsers().add(new BeaconParser().
+//                setBeaconLayout(str));
         beaconManager.setDebug(true);
 
 
