@@ -38,6 +38,8 @@ public class dashboardFragment extends Fragment {
 
     private TextView mTextMessage;
 
+    private int num_HHE = 6;
+
     Boolean hasDispensed = false;
 
 //    String startTime;
@@ -135,10 +137,8 @@ public class dashboardFragment extends Fragment {
             if (startTime!=null && endTime != null){
                 updateTimeline(startTime, endTime, view);
             }
-
-
         }
-        if (status == "alerting"){
+        else if (status == "alerting"){
             tracking_symbol.setVisibility(View.GONE);
             alert_symbol.setVisibility(View.VISIBLE);
         }
@@ -146,7 +146,12 @@ public class dashboardFragment extends Fragment {
             tracking_symbol.setVisibility(View.GONE);
             alert_symbol.setVisibility(View.GONE);
             loading_rainbow.setVisibility(View.VISIBLE);
-//            startTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
+        }
+        else if (status=="HHE"){
+            checked_done.setVisibility(View.VISIBLE);
+            tracking_symbol.setVisibility(View.GONE);
+            alert_symbol.setVisibility(View.GONE);
+            loading_rainbow.setVisibility(View.GONE);
         }
 
 
@@ -314,31 +319,29 @@ public class dashboardFragment extends Fragment {
             }
         });
 
+        checked_done.addAnimatorListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animator) {
+                status_text.setText(R.string.checked_done_text);
+            }
 
-//        alert_symbol.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                tracking_symbol.setVisibility(View.VISIBLE);
-//                loading_rainbow.setVisibility(View.GONE);
-//                alert_symbol.setVisibility(View.GONE);
-//                tracking_symbol.playAnimation();
-//
-//                //Update with new data-point
-//
-//                BaseActivity activity = (BaseActivity) getActivity();
-//                String startTime = activity.getStartTime();
-//                String endTime = activity.getEndTime();
-//
-//                String time = startTime + " - " + endTime;
-//                mDataList.add(0, new timelineViewModel("Visit to Room HG E41, ETH Zurich Hauptgebäude",time,"10","Disinfected 15s after entry"));
-//                mAdapter.notifyDataSetChanged();
-//
-//                TextView textView = getView().findViewById(R.id.numRoomEntries);
-//                String str = "\u2022 Total number of room entries........... 9";
-//                textView.setText( str);
-//
-//            }
-//        });
+            @Override
+            public void onAnimationEnd(Animator animator) {
+                checked_done.setVisibility(View.GONE);
+                tracking_symbol.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animator) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animator) {
+
+            }
+        });
+
 
     }
 
@@ -356,6 +359,11 @@ public class dashboardFragment extends Fragment {
         TextView textView = view.findViewById(R.id.numRoomEntries);
         String str = "\u2022 Total number of room entries........... 9";
         textView.setText( str);
+
+        num_HHE +=1;
+        String str2 = "\u2022 Total number of disinfections........... "+String.valueOf(num_HHE);
+        TextView v = view.findViewById(R.id.numHHEs);
+        v.setText(str2);
     }
 
 }

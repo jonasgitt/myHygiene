@@ -5,11 +5,16 @@ import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.le.BluetoothLeScanner;
+import android.bluetooth.le.ScanCallback;
+import android.bluetooth.le.ScanResult;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.RemoteException;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
@@ -49,7 +54,7 @@ import java.util.Locale;
 import java.util.Queue;
 import java.util.logging.Logger;
 
-public class BaseActivity extends AppCompatActivity implements BeaconConsumer {
+public class BaseActivity extends AppCompatActivity  {
 
     protected static final String TAG = "myTag";
     private static final int PERMISSION_REQUEST_FINE_LOCATION = 1;
@@ -63,102 +68,19 @@ public class BaseActivity extends AppCompatActivity implements BeaconConsumer {
     BottomNavigationView bottomNav;
     String bundleStatus = null;
 
-
-    private BeaconManager beaconManager = BeaconManager.getInstanceForApplication(this);
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        beaconManager.unbind(this);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        beaconManager.bind(this);
-    }
-
-    DistanceCalculator customDist = new customDistanceCalculator(3.303801672, 4.219149161, 0.063776869);
-
-    @Override
-    public void onBeaconServiceConnect() {
-
-        beaconManager.setForegroundScanPeriod(100l); // 200ms
-        beaconManager.setForegroundBetweenScanPeriod(0l); // 0ms
-
-        logToDisplay("i here");
+    private BluetoothAdapter mBluetoothAdapter  = null;
+    private BluetoothLeScanner mBluetoothLeScanner = null;
+    private boolean mScanning = false;
+    private Handler mHandler = null;
 
 
-//        ByteBuffer vbb = ByteBuffer.allocateDirect(50); //use ByteBuffer first b/c allocateDirect not available for floats
-//        vbb.order(ByteOrder.nativeOrder());    // use the device hardware's native byte order
-//        final DoubleBuffer buf = vbb.asDoubleBuffer();  // create a floating point buffer from the ByteBuffer
-
-        final CircularFifoQueue<Double> fifo = new CircularFifoQueue<Double>(5);
-
-
-        RangeNotifier rangeNotifier = new RangeNotifier() {
-            @Override
-            public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
-                if (beacons.size() > 0) {
-                    Log.d("myTag", "didRangeBeaconsInRegion called with beacon count:  "+beacons.size());
-                    Beacon beacon = beacons.iterator().next();
-
-                    beacon.setDistanceCalculator(customDist);
-//                  logToDisplay(firstBeacon.getIdentifiers().get(1).toString());
-//                  if (firstBeacon.getIdentifiers().get(1).toString().equals("0xabcde0ab012e")){
-                    fifo.add(beacon.getDistance());
-
-                    if (fifo.size() > 4) {
-                        if (fifo.get(0) < 1 && fifo.get(1) < 1 && fifo.get(2) < 1 && fifo.get(3) < 1 && fifo.get(4) < 1) {
-                            logToDisplay(fifo.toString());
-                        }
-                    }
-                   // beacon.get
-                    logToDisplay(beacon.getDataFields().toString());
-//                        logToDisplay("Distance :" + beacon.getDistance());
-//                        logToDisplay("RSSI: " + beacon.getRssi());
-//                        logToDisplay("AVG: " + beacon.getRunningAverageRssi());
-//                  }
-//                  firstBeacon.getRunningAverageRssi()
-
-                }
-            }
-
-        };
-        try {
-            beaconManager.startRangingBeaconsInRegion(new Region("myRangingUniqueId", null, null, null));
-            beaconManager.addRangeNotifier(rangeNotifier);
-            beaconManager.startRangingBeaconsInRegion(new Region("myRangingUniqueId", null, null, null));
-            beaconManager.addRangeNotifier(rangeNotifier);
-
-            BeaconManager.setRssiFilterImplClass(ArmaRssiFilter.class);
-            RunningAverageRssiFilter.setSampleExpirationMilliseconds(1000l);
-
-            //   beaconManager.getBeaconParsers().add(new BeaconParser()
-//                    .setBeaconLayout("m:2-3=beac,i:4-19,i:20-21,i:22-23,p:24-24,d:25-25"));
-        } catch (RemoteException e) {   }
-    }
 
     private void logToDisplay(final String line) {
 //        Logger.log
         Log.d("myTAG", line);
     }
 
-    //_______________________________________________________
 
-
-
-
-
-
-
-
-    //__________________________________________________________
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -175,17 +97,18 @@ public class BaseActivity extends AppCompatActivity implements BeaconConsumer {
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                 new newsFragment()).commit();
-//
+
         createNotificationChannel();
-        //I added this if statement to keep the selected fragment when rotating the device
-//        if (savedInstanceState == null) {
-//            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-//                    new HomeFragment()).commit();
-//        }
+
+
+        this.mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        this.mBluetoothLeScanner = mBluetoothAdapter.getBluetoothLeScanner();
+        this.mHandler = new Handler();
 
         verifyBluetooth();
         verifyLocation();
 
+        enableScan(true);
 
     }
 
@@ -344,16 +267,18 @@ public class BaseActivity extends AppCompatActivity implements BeaconConsumer {
         }
     }
 
+    public void enableScan(final boolean enable) {
+        //ScanSettings mScanSettings = new ScanSettings.Builder().setScanMode(ScanSettings.SCAN_MODE_BALANCED).setCallbackType(ScanSettings.CALLBACK_TYPE_ALL_MATCHES).build();
 
-    public Boolean hasEntered(){
-        return hasEntered;
-    }
-
-    public String getStartTime(){
-        return startTime;
-    }
-    public String getEndTime() {
-        return endTime;
+        if (enable) {
+            mScanning = true;
+            Log.d("myTag2", "start");
+            mBluetoothLeScanner.startScan(mLeScanCallback);
+        } else {
+            Log.d("myTag2", "stop");
+            mScanning = false;
+            mBluetoothLeScanner.stopScan(mLeScanCallback);
+        }
     }
 
     @Override
@@ -503,4 +428,50 @@ public class BaseActivity extends AppCompatActivity implements BeaconConsumer {
             }
         }
     }
+
+
+    int arduinoCount = 0;
+
+
+    long firstHHE;
+
+    private ScanCallback mLeScanCallback =
+            new ScanCallback() {
+
+                @Override
+                public void onScanResult(int callbackType, final ScanResult result) {
+                    //super.onScanResult(callbackType, result);
+                    String str = result.getDevice().getName();
+                    long elapsed = 0;
+                    if (str==null) {
+                        str = "no name found";
+                    }
+                    else if (str.contains("Arduino")){
+                        if (arduinoCount==0){
+                            firstHHE = System.currentTimeMillis();
+                            Toast.makeText(getApplicationContext(), "HHE detected", Toast.LENGTH_LONG).show();
+                            Log.d("myTag2", "HHE detected");
+                            arduinoCount += 1;
+
+                            bundleStatus = "HHE";
+                            navListener.onNavigationItemSelected(bottomNav.getMenu().getItem(1));
+                            bottomNav.setSelectedItemId(R.id.navigation_dashboard);
+                        }
+                        else
+                            elapsed = (System.currentTimeMillis()-firstHHE);
+
+
+                        if (elapsed > 5000){
+                            arduinoCount = 0;
+                            Log.d("myTag2", "resetting timer");
+                        }
+                    }
+                }
+
+                @Override
+                public void onScanFailed(int errorCode) {
+                    super.onScanFailed(errorCode);
+                    Log.d("myTag2", "error");
+                }
+            };
 }

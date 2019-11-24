@@ -36,7 +36,7 @@
             android:title= "Allow data sharing" />
 
         <SwitchPreference
-            android:title="Include position information"
+            android:title="Include role information"
             android:summary="Hygienists will be able to see whether you are a doctor or a nurse."
             android:dependency = "data_sharing"
             />
