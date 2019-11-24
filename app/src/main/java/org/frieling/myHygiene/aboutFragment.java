@@ -1,4 +1,4 @@
-package org.altbeacon.beaconreference;
+package org.frieling.myHygiene;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,8 +8,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
-import mehdi.sakout.aboutpage.AboutPage;
 
 public class aboutFragment extends Fragment {
 

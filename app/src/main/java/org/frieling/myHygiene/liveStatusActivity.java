@@ -1,7 +1,6 @@
-package org.altbeacon.beaconreference;
+package org.frieling.myHygiene;
 
 import android.animation.Animator;
-import android.content.Intent;
 import android.os.Bundle;
 
 import com.airbnb.lottie.LottieAnimationView;
@@ -16,7 +15,6 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;

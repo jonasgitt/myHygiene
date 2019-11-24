@@ -1,4 +1,4 @@
-package org.altbeacon.beaconreference;
+package org.frieling.myHygiene;
 
 import android.animation.Animator;
 import android.content.Context;
@@ -6,7 +6,6 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,11 +18,8 @@ import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 
 /**

@@ -1,9 +1,7 @@
-package org.altbeacon.beaconreference;
+package org.frieling.myHygiene;
 
 import android.view.View;
-import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.vipulasri.timelineview.TimelineView;

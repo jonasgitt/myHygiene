@@ -1,4 +1,4 @@
-package org.altbeacon.beaconreference;
+package org.frieling.myHygiene;
 
 import android.Manifest;
 import android.annotation.TargetApi;
@@ -6,7 +6,6 @@ import android.app.AlertDialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothManager;
 import android.bluetooth.le.BluetoothLeScanner;
 import android.bluetooth.le.ScanCallback;
@@ -18,15 +17,12 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.RemoteException;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.ViewConfiguration;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -42,16 +38,13 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
-import org.altbeacon.beacon.BeaconManager;
+//import org.frieling.beacon.BeaconManager;
 
 
 
 import java.text.SimpleDateFormat;
-import java.util.Collection;
 import java.util.Date;
 import java.util.Locale;
-import java.util.Queue;
-import java.util.logging.Logger;
 
 public class BaseActivity extends AppCompatActivity  {
 
@@ -117,7 +110,7 @@ public class BaseActivity extends AppCompatActivity  {
         mBluetoothLeScanner = mBluetoothAdapter.getBluetoothLeScanner();
         mHandler = new Handler();
 
-        verifyBluetooth();
+
         verifyLocation();
 
         checkBtPermissions();
@@ -341,44 +334,44 @@ public class BaseActivity extends AppCompatActivity  {
         }
     }
 
-
-    private void verifyBluetooth() {
-
-        try {
-            if (!BeaconManager.getInstanceForApplication(this).checkAvailability()) {
-                final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle("Bluetooth not enabled");
-                builder.setMessage("Please enable bluetooth in settings and restart this application.");
-                builder.setPositiveButton(android.R.string.ok, null);
-                builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface dialog) {
-                        //finish();
-                        //System.exit(0);
-                    }
-                });
-                builder.show();
-            }
-        }
-        catch (RuntimeException e) {
-            final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("Bluetooth LE not available");
-            builder.setMessage("Sorry, this device does not support Bluetooth LE.");
-            builder.setPositiveButton(android.R.string.ok, null);
-            builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
-
-                @Override
-                public void onDismiss(DialogInterface dialog) {
-                    //finish();
-                    //System.exit(0);
-                }
-
-            });
-            builder.show();
-
-        }
-
-    }
+//
+//    private void verifyBluetooth() {
+//
+//        try {
+//            if (!BeaconManager.getInstanceForApplication(this).checkAvailability()) {
+//                final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//                builder.setTitle("Bluetooth not enabled");
+//                builder.setMessage("Please enable bluetooth in settings and restart this application.");
+//                builder.setPositiveButton(android.R.string.ok, null);
+//                builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+//                    @Override
+//                    public void onDismiss(DialogInterface dialog) {
+//                        //finish();
+//                        //System.exit(0);
+//                    }
+//                });
+//                builder.show();
+//            }
+//        }
+//        catch (RuntimeException e) {
+//            final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//            builder.setTitle("Bluetooth LE not available");
+//            builder.setMessage("Sorry, this device does not support Bluetooth LE.");
+//            builder.setPositiveButton(android.R.string.ok, null);
+//            builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+//
+//                @Override
+//                public void onDismiss(DialogInterface dialog) {
+//                    //finish();
+//                    //System.exit(0);
+//                }
+//
+//            });
+//            builder.show();
+//
+//        }
+//
+//    }
 
 
     public void checkBtPermissions() {

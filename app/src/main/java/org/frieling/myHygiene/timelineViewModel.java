@@ -1,6 +1,4 @@
-package org.altbeacon.beaconreference;
-
-import androidx.annotation.NonNull;
+package org.frieling.myHygiene;
 
 public class timelineViewModel {
 

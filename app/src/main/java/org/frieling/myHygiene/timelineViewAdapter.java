@@ -1,4 +1,4 @@
-package org.altbeacon.beaconreference;
+package org.frieling.myHygiene;
 
 import android.content.Context;
 import android.content.res.Resources;
