@@ -6,11 +6,14 @@ import android.app.AlertDialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothManager;
 import android.bluetooth.le.BluetoothLeScanner;
 import android.bluetooth.le.ScanCallback;
 import android.bluetooth.le.ScanResult;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -36,16 +39,10 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import org.altbeacon.beacon.Beacon;
-import org.altbeacon.beacon.BeaconConsumer;
+
 import org.altbeacon.beacon.BeaconManager;
-import org.altbeacon.beacon.RangeNotifier;
-import org.altbeacon.beacon.Region;
-import org.altbeacon.beacon.distance.DistanceCalculator;
-import org.altbeacon.beacon.service.ArmaRssiFilter;
-import org.altbeacon.beacon.service.RunningAverageRssiFilter;
-import org.altbeacon.beaconreference.R;
-import org.apache.commons.collections4.queue.CircularFifoQueue;
+
+
 
 import java.text.SimpleDateFormat;
 import java.util.Collection;
@@ -60,7 +57,11 @@ public class BaseActivity extends AppCompatActivity  {
     private static final int PERMISSION_REQUEST_FINE_LOCATION = 1;
     private static final int PERMISSION_REQUEST_BACKGROUND_LOCATION = 2;
 
+    public static final int REQUEST_BT_PERMISSIONS = 0;
+    public static final int REQUEST_BT_ENABLE = 1;
+
     private static final String CHANNEL_ID = "myChannelID";
+    private static final int REQUEST_ENABLE_BT = 1;
     public  String startTime = null; // = "10:40:32";
     public  Boolean hasEntered = false;
     public  String endTime = null;
@@ -101,12 +102,24 @@ public class BaseActivity extends AppCompatActivity  {
         createNotificationChannel();
 
 
-        this.mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        this.mBluetoothLeScanner = mBluetoothAdapter.getBluetoothLeScanner();
-        this.mHandler = new Handler();
+//        this.mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        final BluetoothManager bluetoothManager =
+                (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
+        mBluetoothAdapter = bluetoothManager.getAdapter();
+
+        if (mBluetoothAdapter == null || !mBluetoothAdapter.isEnabled()) {
+            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+        }
+
+        mBluetoothLeScanner = mBluetoothAdapter.getBluetoothLeScanner();
+        mHandler = new Handler();
 
         verifyBluetooth();
         verifyLocation();
+
+        checkBtPermissions();
+        enableBt();
 
         enableScan(true);
 
@@ -366,6 +379,26 @@ public class BaseActivity extends AppCompatActivity  {
     }
 
 
+    public void checkBtPermissions() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            this.requestPermissions(
+                    new String[]{
+                            Manifest.permission.BLUETOOTH, Manifest.permission.BLUETOOTH_ADMIN
+                    },
+                    REQUEST_BT_PERMISSIONS);
+        }
+    }
+
+    public void enableBt(){
+        if (mBluetoothAdapter == null) {
+            // Device does not support Bluetooth
+        }
+        if (!mBluetoothAdapter.isEnabled()) {
+            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableBtIntent, REQUEST_BT_ENABLE);
+        }
+    }
+
     private void verifyLocation() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (this.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)
@@ -440,38 +473,47 @@ public class BaseActivity extends AppCompatActivity  {
 
                 @Override
                 public void onScanResult(int callbackType, final ScanResult result) {
-                    //super.onScanResult(callbackType, result);
-                    String str = result.getDevice().getName();
-                    long elapsed = 0;
-                    if (str==null) {
-                        str = "no name found";
+                    super.onScanResult(callbackType, result);
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            String str = result.getDevice().getName();
+                            long elapsed = 0;
+                            if (str == null) {
+                                str = "no name found";
+                            } else if (str.contains("Arduino")) {
+                                if (arduinoCount == 0) {
+                                    firstHHE = System.currentTimeMillis();
+                                    Toast.makeText(getApplicationContext(), "HHE detected", Toast.LENGTH_LONG).show();
+                                    Log.d("myTag2", "HHE detected");
+                                    arduinoCount += 1;
+
+                                    bundleStatus = "HHE";
+                                    navListener.onNavigationItemSelected(bottomNav.getMenu().getItem(1));
+                                    bottomNav.setSelectedItemId(R.id.navigation_dashboard);
+                                } else
+                                    elapsed = (System.currentTimeMillis() - firstHHE);
+
+
+                                if (elapsed > 5000) {
+                                    arduinoCount = 0;
+                                    Log.d("myTag2", "resetting timer");
+                                }
+                            }
+
                     }
-                    else if (str.contains("Arduino")){
-                        if (arduinoCount==0){
-                            firstHHE = System.currentTimeMillis();
-                            Toast.makeText(getApplicationContext(), "HHE detected", Toast.LENGTH_LONG).show();
-                            Log.d("myTag2", "HHE detected");
-                            arduinoCount += 1;
-
-                            bundleStatus = "HHE";
-                            navListener.onNavigationItemSelected(bottomNav.getMenu().getItem(1));
-                            bottomNav.setSelectedItemId(R.id.navigation_dashboard);
-                        }
-                        else
-                            elapsed = (System.currentTimeMillis()-firstHHE);
-
-
-                        if (elapsed > 5000){
-                            arduinoCount = 0;
-                            Log.d("myTag2", "resetting timer");
-                        }
-                    }
+                    });
                 }
-
                 @Override
                 public void onScanFailed(int errorCode) {
                     super.onScanFailed(errorCode);
-                    Log.d("myTag2", "error");
+                    Log.d("myTag2", "error" + errorCode);
+                    mBluetoothAdapter.disable();
+                    mBluetoothAdapter.enable();
+                    mBluetoothLeScanner = mBluetoothAdapter.getBluetoothLeScanner();
+                    enableScan(true);
                 }
             };
 }
