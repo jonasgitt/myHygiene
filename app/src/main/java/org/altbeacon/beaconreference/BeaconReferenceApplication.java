@@ -120,12 +120,12 @@ public class BeaconReferenceApplication extends Application implements Bootstrap
 
             // The very first time since boot that we detect an beacon, we launch the
             // MainActivity
-            Intent intent = new Intent(this, MonitoringActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            //Intent intent = new Intent(this, MonitoringActivity.class);
+           // intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             // Important:  make sure to add android:launchMode="singleInstance" in the manifest
             // to keep multiple copies of this activity from getting created if the user has
             // already manually launched the app.
-            this.startActivity(intent);
+            //this.startActivity(intent);
             haveDetectedBeaconsSinceBoot = true;
         } else {
             if (monitoringActivity != null) {
@@ -136,7 +136,7 @@ public class BeaconReferenceApplication extends Application implements Bootstrap
                 // If we have already seen beacons before, but the monitoring activity is not in
                 // the foreground, we send a notification to the user on subsequent detections.
                 Log.d(TAG, "Sending notification.");
-                sendNotification();
+                //sendNotification();
             }
         }
 
@@ -180,6 +180,7 @@ public class BeaconReferenceApplication extends Application implements Bootstrap
 
     private void logToDisplay(String line) {
         cumulativeLog += (line + "\n");
+        Log.d("myTAG", line);
         if (this.monitoringActivity != null) {
             this.monitoringActivity.updateLog(cumulativeLog);
         }
